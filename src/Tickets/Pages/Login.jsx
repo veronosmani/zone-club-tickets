@@ -1,7 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import zoneLogo from '../../assets/ZoneLogo.png'; 
+import emailIcon from '../../assets/emailIcon.png';
+import passwordIcon from '../../assets/passwordIcon.png';
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    sessionStorage.removeItem("selectedEvent");  // Clear session storage on login
+    navigate('/generate');
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen" style={{backgroundColor: "#101010"}}>
       <div 
@@ -18,17 +28,36 @@ const Login = () => {
           <h1 className="text-white text-2xl pt-4 mb-8" style={{ fontFamily: 'Play, sans-serif' }}>Welcome Back!</h1>
         </div>
         <div className="flex flex-col space-y-6 w-full px-4">
-          <input
-            type="email"
-            placeholder="Email Address"
-            className="p-2 rounded bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-500 w-full"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className="p-2 rounded bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-500 w-full"
-          />
-          <button className="py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 w-full">
+          <div className="relative w-full">
+            <input
+              type="email"
+              placeholder="Email Address"
+              className="p-2 pl-10 rounded bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-500 w-full"
+              style={{ 
+                backgroundImage: `url(${emailIcon})`, 
+                backgroundSize: '20px', 
+                backgroundPosition: '10px center', 
+                backgroundRepeat: 'no-repeat'
+              }}
+            />
+          </div>
+          <div className="relative w-full">
+            <input
+              type="password"
+              placeholder="Password"
+              className="p-2 pl-10 rounded bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-500 w-full"
+              style={{ 
+                backgroundImage: `url(${passwordIcon})`, 
+                backgroundSize: '20px', 
+                backgroundPosition: '10px center', 
+                backgroundRepeat: 'no-repeat'
+              }}
+            />
+          </div>
+          <button
+            onClick={handleLogin}
+            className="py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 w-full"
+          >
             Login
           </button>
         </div>

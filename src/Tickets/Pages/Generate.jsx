@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../Components/Header";
 import dropdownArrow from "../../assets/dropdownArrow.png";
+import generateIcon from "../../assets/Generate.png";
 
 const Generate = () => {
   const [events, setEvents] = useState([]);
@@ -12,17 +14,19 @@ const Generate = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [eventName, setEventName] = useState("Event name");
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     // Simulate fetching events from an API
     const fetchedEvents = [
-      { id: 1, name: "Event 1", priceM: 10, priceF: 5 },
-      { id: 2, name: "Event 2", priceM: 15, priceF: 10 },
-      { id: 3, name: "Event 3", priceM: 20, priceF: 10 },
+      { id: 1, name: "Wednesday Night - 03/07", priceM: 10, priceF: 5 },
+      { id: 2, name: "Friday Night - 05/07", priceM: 15, priceF: 10 },
+      { id: 3, name: "Saturday Night - 06/07", priceM: 20, priceF: 10 },
     ];
     setEvents(fetchedEvents);
 
-    // Load selected event from local storage if available
-    const storedEvent = localStorage.getItem("selectedEvent");
+    // Load selected event from session storage if available
+    const storedEvent = sessionStorage.getItem("selectedEvent");
     if (storedEvent) {
       const event = JSON.parse(storedEvent);
       setSelectedEvent(event);
@@ -39,8 +43,8 @@ const Generate = () => {
     setEventName(event.name);
     setDropdownOpen(false);
 
-    // Save selected event to local storage
-    localStorage.setItem("selectedEvent", JSON.stringify(event));
+    // Save selected event to session storage
+    sessionStorage.setItem("selectedEvent", JSON.stringify(event));
   };
 
   const toggleDropdown = () => {
@@ -61,8 +65,14 @@ const Generate = () => {
 
   const totalPrice = calculatePrice(inputM, priceM) + calculatePrice(inputF, priceF);
 
+  const handleGenerate = () => {
+    navigate('/print', { state: { selectedEvent, inputM, inputF } });
+  };
+
+  const isGenerateDisabled = !selectedEvent || (!inputM && !inputF);
+
   return (
-    <div className="w-full min-h-screen flex flex-col items-center" style={{backgroundColor: "#101010"}}>
+    <div className="w-full min-h-screen flex flex-col items-center" style={{ backgroundColor: "#101010" }}>
       <Header />
       <div className="flex justify-center w-full">
         <div className="flex flex-row w-[1000px] h-[50px] justify-between items-center px-5 bg-red-600 rounded-md relative">
@@ -101,7 +111,7 @@ const Generate = () => {
             />
             <div className="w-full h-[1px] bg-gray-600 mb-4"></div>
             <h1 className="text-white text-3xl text-center">
-              {priceM}€
+              {calculatePrice(inputM, priceM)}€
             </h1>
           </div>
         </div>
@@ -120,7 +130,7 @@ const Generate = () => {
             />
             <div className="w-full h-[1px] bg-gray-600 mb-4"></div>
             <h1 className="text-white text-3xl text-center">
-            {priceM}€
+              {calculatePrice(inputF, priceF)}€
             </h1>
           </div>
         </div>
@@ -129,8 +139,13 @@ const Generate = () => {
         <div className="w-[500px] h-[60px] text-white flex items-center justify-center text-xl rounded-t-md" style={{ backgroundColor: "#191919" }}>
           TOTAL: {totalPrice}€
         </div>
-        <button className="w-[500px] h-[60px] bg-red-600 text-white text-xl rounded-b-md flex items-center justify-center">
+        <button
+          onClick={handleGenerate}
+          className={`w-[500px] h-[60px] text-white text-xl rounded-b-md flex items-center justify-center ${isGenerateDisabled ? 'bg-gray-600 cursor-not-allowed' : 'bg-red-600 hover:bg-red-700'}`}
+          disabled={isGenerateDisabled}
+        >
           GENERATE
+          <img src={generateIcon} alt="Generate Icon" style={{ marginLeft: '10px' }} />
         </button>
       </div>
     </div>
