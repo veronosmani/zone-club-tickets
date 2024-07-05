@@ -44,7 +44,7 @@ const PrintContent = React.forwardRef(({ selectedEvent, inputM, inputF, dateTime
       const uniqueValue = `${selectedEvent.name}-F-${formattedDate}-${formattedTime}-${i}-${Math.random().toString(36).substring(7)}`;
       pages.push(
         <div className="w-full min-h-screen border-4 border-black bg-white" key={`f-${i}`}>
-          <div className="bg-black text-white flex justify-between items-center p-5">
+          <div className="text-white flex justify-between items-center p-5" style={{backgroundColor: "#323232"}}>
             <img src={TicketLogoW} alt="W Ticket Logo" className="w-36" />
             <div className="text-right">
               <h1>{formattedDate} - {formattedTime}</h1>

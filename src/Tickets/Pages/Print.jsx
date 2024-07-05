@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../Components/Header';
 import ReactToPrint from 'react-to-print';
@@ -17,6 +17,7 @@ const Print = () => {
 
   const printRef = useRef();
   const [isPrinting, setIsPrinting] = useState(false);
+  const [printAttempted, setPrintAttempted] = useState(false);
 
   const handleBeforePrint = () => {
     setIsPrinting(true);
@@ -25,13 +26,23 @@ const Print = () => {
   const handleAfterPrint = () => {
     if (isPrinting) {
       setIsPrinting(false);
-      navigate('/generate');
+      navigate('/generate'); // Navigate back only after successful print
     }
   };
 
   const handlePrintError = () => {
     setIsPrinting(false);
   };
+
+  useEffect(() => {
+    window.addEventListener('beforeprint', handleBeforePrint);
+    window.addEventListener('afterprint', handleAfterPrint);
+
+    return () => {
+      window.removeEventListener('beforeprint', handleBeforePrint);
+      window.removeEventListener('afterprint', handleAfterPrint);
+    };
+  }, [isPrinting, navigate]);
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center" style={{ backgroundColor: "#101010" }}>
@@ -87,10 +98,14 @@ const Print = () => {
           trigger={() => (
             <button className="w-[500px] h-[60px] bg-red-600 text-white text-xl rounded-b-md flex items-center justify-center">
               PRINT
-              <img src={printIcon} style={{ marginLeft: '5px' }} />
+              <img src={printIcon} style={{ marginLeft: '5px' }} alt="Print Icon" />
             </button>
           )}
           content={() => printRef.current}
+          onBeforeGetContent={() => {
+            setPrintAttempted(true);
+            return Promise.resolve();
+          }}
           onBeforePrint={handleBeforePrint}
           onAfterPrint={handleAfterPrint}
           onPrintError={handlePrintError}
