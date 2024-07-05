@@ -26,56 +26,13 @@ code {
   -moz-appearance: textfield;
 }
 
-@media print {
-  body > *:not(#qrCodesContainer) {
-    display: none;
-  }
-  #qrCodesContainer {
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
-.printable-content {
-  display: block;
-}
-
-.ticket-page {
-  page-break-after: always;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
-}
-
-.ticket-header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 40px;
-}
-
-.ticket-header img {
-  width: 150px;
-}
-
-.ticket-header div {
-  text-align: right;
-}
-
-/* Hide the content on the screen */
+/* Hide content on screen but show it during print */
 @media screen {
   .printable-content {
     display: none;
   }
 }
 
-/* Show the content during print */
 @media print {
   .printable-content {
     display: block;
@@ -97,4 +54,3 @@ code {
     width: 100%;
   }
 }
-

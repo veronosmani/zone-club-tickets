@@ -14,14 +14,15 @@ const Generate = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [eventName, setEventName] = useState("Event name");
   const [dateTime, setDateTime] = useState("");
+  const [eventDate, setEventDate] = useState("");
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchedEvents = [
-      { id: 1, name: "Wednesday Night - 03/07", date: "03/07", priceM: 10, priceF: 5 },
-      { id: 2, name: "Friday Night - 05/07", date: "05/07", priceM: 15, priceF: 10 },
-      { id: 3, name: "Saturday Night - 06/07", date: "06/07", priceM: 20, priceF: 10 },
+      { id: 1, name: "Wednesday Night", date: "03/07", priceM: 10, priceF: 5 },
+      { id: 2, name: "Friday Night", date: "05/07", priceM: 15, priceF: 10 },
+      { id: 3, name: "Saturday Night", date: "06/07", priceM: 20, priceF: 10 },
     ];
     setEvents(fetchedEvents);
 
@@ -32,6 +33,7 @@ const Generate = () => {
       setPriceM(event.priceM);
       setPriceF(event.priceF);
       setEventName(event.name);
+      setEventDate(event.date);
     }
   }, []);
 
@@ -40,6 +42,7 @@ const Generate = () => {
     setPriceM(event.priceM);
     setPriceF(event.priceF);
     setEventName(event.name);
+    setEventDate(event.date);
     setDropdownOpen(false);
     sessionStorage.setItem("selectedEvent", JSON.stringify(event));
   };
@@ -68,10 +71,10 @@ const Generate = () => {
       selectedEvent,
       inputM,
       inputF,
-      dateTime: now.toISOString()
+      dateTime: now.toISOString(),
     };
     setDateTime(tickets.dateTime); // Store the generated dateTime
-    navigate('/print', { state: tickets });
+    navigate("/print", { state: tickets });
   };
 
   const isGenerateDisabled = !selectedEvent || (!inputM && !inputF);
@@ -81,7 +84,9 @@ const Generate = () => {
       <Header />
       <div className="flex justify-center w-full">
         <div className="flex flex-row w-[1000px] h-[50px] justify-between items-center px-5 bg-red-600 rounded-md relative">
-          <h1 className="text-white font-bold text-2xl">{eventName}</h1>
+          <h1 className="text-white font-bold text-2xl">
+            {eventName} {eventDate && ` - ${eventDate}`}
+          </h1>
           <button onClick={toggleDropdown}>
             <img src={dropdownArrow} alt="Dropdown Arrow" />
           </button>
@@ -93,7 +98,7 @@ const Generate = () => {
                   className="p-2 hover:bg-gray-200 cursor-pointer"
                   onClick={() => handleEventSelect(event)}
                 >
-                  {event.name}
+                  {event.name} - {event.date}
                 </div>
               ))}
             </div>
@@ -146,11 +151,11 @@ const Generate = () => {
         </div>
         <button
           onClick={handleGenerate}
-          className={`w-[500px] h-[60px] text-white text-xl rounded-b-md flex items-center justify-center ${isGenerateDisabled ? 'bg-gray-600 cursor-not-allowed' : 'bg-red-600 hover:bg-red-700'}`}
+          className={`w-[500px] h-[60px] text-white text-xl rounded-b-md flex items-center justify-center ${isGenerateDisabled ? "bg-gray-600 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"}`}
           disabled={isGenerateDisabled}
         >
           GENERATE
-          <img src={generateIcon} alt="Generate Icon" style={{ marginLeft: '10px' }} />
+          <img src={generateIcon} alt="Generate Icon" style={{ marginLeft: "10px" }} />
         </button>
       </div>
     </div>

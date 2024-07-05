@@ -8,7 +8,7 @@ import PrintContent from '../Components/PrintContent';
 const Print = () => {
   const location = useLocation();
   const { selectedEvent, inputM, inputF, dateTime } = location.state || {
-    selectedEvent: { id: 1, name: "Event 1", priceM: 10, priceF: 5 },
+    selectedEvent: { id: 1, name: "Event 1", date: "03/07", priceM: 10, priceF: 5 },
     inputM: "3",
     inputF: "2",
     dateTime: new Date().toISOString()
@@ -21,7 +21,7 @@ const Print = () => {
       <Header />
       <div className="flex justify-center w-full">
         <div className="flex flex-row w-[1000px] h-[50px] justify-between items-center px-5 bg-[#515151] rounded-md relative">
-          <h1 className="text-white font-bold text-2xl">{selectedEvent.name}</h1>
+          <h1 className="text-white font-bold text-2xl">{selectedEvent.name} - {selectedEvent.date}</h1>
         </div>
       </div>
       <div className="flex flex-row mt-10 w-[1000px] h-[230px] justify-between items-start">
@@ -32,7 +32,7 @@ const Print = () => {
           <div className="p-4 rounded-b-md w-[425px] h-[300px] flex flex-col items-center" style={{ backgroundColor: "#191919" }}>
             <input
               type="number"
-              className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-white text-center"
+              className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-white text-center custom-number-input"
               style={{ backgroundColor: "#191919" }}
               value={inputM}
               readOnly
@@ -50,7 +50,7 @@ const Print = () => {
           <div className="p-4 rounded-b-md w-[425px] h-[300px] flex flex-col items-center" style={{ backgroundColor: "#191919" }}>
             <input
               type="number"
-              className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-white text-center"
+              className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-white text-center custom-number-input"
               style={{ backgroundColor: "#191919" }}
               value={inputF}
               readOnly
@@ -83,7 +83,7 @@ const Print = () => {
         />
       </div>
       {/* Render PrintContent but keep it hidden on screen */}
-      <div className="printable-content">
+      <div style={{ display: 'none' }}>
         <PrintContent ref={printRef} selectedEvent={selectedEvent} inputM={inputM} inputF={inputF} dateTime={dateTime} />
       </div>
     </div>
