@@ -1,15 +1,18 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import Header from "../Components/Header";
+import zoneLogo from '../../assets/ZoneLogo.png';
+import QRCode from "qrcode.react";
 import dropdownArrow from "../../assets/dropdownArrow.png";
-import printIcon from '../../assets/printIcon.png'
+import printIcon from '../../assets/printIcon.png';
 
 const Print = () => {
   const location = useLocation();
-  const { selectedEvent, inputM, inputF } = location.state || {
-    selectedEvent: { id: 1, name: "Event 1", priceM: 10, priceF: 5 },
+  const { selectedEvent, inputM, inputF, dateTime } = location.state || {
+    selectedEvent: { id: 1, name: "Event 1", date: "03/07", priceM: 10, priceF: 5 },
     inputM: "3",
-    inputF: "2"
+    inputF: "2",
+    dateTime: new Date().toISOString()
   };
 
   const calculatePrice = (input, price) => {
@@ -17,6 +20,67 @@ const Print = () => {
   };
 
   const totalPrice = calculatePrice(inputM, selectedEvent.priceM) + calculatePrice(inputF, selectedEvent.priceF);
+
+  const handlePrint = () => {
+    const qrCodesContainer = document.getElementById('qrCodesContainer');
+    qrCodesContainer.innerHTML = ''; // Clear any existing QR codes
+
+    const data = [
+      { text: `Event: ${selectedEvent.name} - M Tickets: ${inputM}\nDate: ${new Date(dateTime).toLocaleString()}`, type: 'M' },
+      { text: `Event: ${selectedEvent.name} - F Tickets: ${inputF}\nDate: ${new Date(dateTime).toLocaleString()}`, type: 'F' }
+    ];
+
+    data.forEach((item, index) => {
+      for (let i = 0; i < item.value; i++) {
+        const qrCodeDiv = document.createElement('div');
+        qrCodeDiv.classList.add('qrCode');
+        qrCodeDiv.style.pageBreakAfter = 'always';
+        qrCodeDiv.style.display = 'flex';
+        qrCodeDiv.style.flexDirection = 'column';
+        qrCodeDiv.style.alignItems = 'center';
+        qrCodeDiv.style.justifyContent = 'center';
+        qrCodeDiv.style.width = '100vw';
+        qrCodeDiv.style.height = '100vh';
+
+        const headerDiv = document.createElement('div');
+        headerDiv.style.width = '100%';
+        headerDiv.style.display = 'flex';
+        headerDiv.style.justifyContent = 'space-between';
+        headerDiv.style.alignItems = 'center';
+        headerDiv.style.padding = '1rem';
+        headerDiv.style.backgroundColor = item.type === 'M' ? 'black' : 'white';
+        headerDiv.style.color = item.type === 'M' ? 'white' : 'black';
+
+        const logoImg = document.createElement('img');
+        logoImg.src = zoneLogo;
+        logoImg.style.width = '150px';
+
+        const eventInfoDiv = document.createElement('div');
+        eventInfoDiv.style.textAlign = 'right';
+        eventInfoDiv.innerHTML = `<h1>${selectedEvent.date} / ${new Date(dateTime).toLocaleTimeString()}</h1><h1>${selectedEvent.name}</h1>`;
+
+        headerDiv.appendChild(logoImg);
+        headerDiv.appendChild(eventInfoDiv);
+        qrCodeDiv.appendChild(headerDiv);
+
+        const qrCode = document.createElement('div');
+        qrCode.style.margin = '20px';
+        new QRCode(qrCode, {
+          text: item.text,
+          width: 256,
+          height: 256,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+        qrCodeDiv.appendChild(qrCode);
+
+        qrCodesContainer.appendChild(qrCodeDiv);
+      }
+    });
+
+    window.print();
+  };
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center" style={{ backgroundColor: "#101010" }}>
@@ -37,7 +101,7 @@ const Print = () => {
           <div className="p-4 rounded-b-md w-[425px] h-[300px] flex flex-col items-center" style={{ backgroundColor: "#191919" }}>
             <input
               type="number"
-              className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-white text-center custom-number-input"
+              className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-white text-center"
               style={{ backgroundColor: "#191919" }}
               value={inputM}
               readOnly
@@ -55,7 +119,7 @@ const Print = () => {
           <div className="p-4 rounded-b-md w-[425px] h-[300px] flex flex-col items-center" style={{ backgroundColor: "#191919" }}>
             <input
               type="number"
-              className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-white text-center custom-number-input"
+              className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-white text-center"
               style={{ backgroundColor: "#191919" }}
               value={inputF}
               readOnly
@@ -71,11 +135,20 @@ const Print = () => {
         <div className="w-[500px] h-[60px] text-white flex items-center justify-center text-xl rounded-t-md" style={{ backgroundColor: "#191919" }}>
           TOTAL: {totalPrice}€
         </div>
-        <button className="w-[500px] h-[60px] bg-red-600 text-white text-xl rounded-b-md flex items-center justify-center">
+        <button 
+          onClick={handlePrint} 
+          className="w-[500px] h-[60px] bg-red-600 text-white text-xl rounded-b-md flex items-center justify-center"
+        >
           PRINT
           <img src={printIcon} style={{ marginLeft: '5px' }} />
         </button>
       </div>
+
+      {/* QR Codes Container for Printing */}
+      <div 
+        id="qrCodesContainer" 
+        className="hidden"
+      ></div>
     </div>
   );
 };

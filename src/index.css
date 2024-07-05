@@ -25,3 +25,16 @@ code {
 .custom-number-input {
   -moz-appearance: textfield;
 }
+/* Hide everything except the QR codes container when printing */
+@media print {
+  body > *:not(#qrCodesContainer) {
+    display: none;
+  }
+  #qrCodesContainer {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+

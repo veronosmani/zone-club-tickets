@@ -19,9 +19,9 @@ const Generate = () => {
   useEffect(() => {
     // Simulate fetching events from an API
     const fetchedEvents = [
-      { id: 1, name: "Wednesday Night - 03/07", priceM: 10, priceF: 5 },
-      { id: 2, name: "Friday Night - 05/07", priceM: 15, priceF: 10 },
-      { id: 3, name: "Saturday Night - 06/07", priceM: 20, priceF: 10 },
+      { id: 1, name: "Wednesday Night - 03/07", date: "03/07", priceM: 10, priceF: 5 },
+      { id: 2, name: "Friday Night - 05/07", date: "05/07", priceM: 15, priceF: 10 },
+      { id: 3, name: "Saturday Night - 06/07", date: "06/07", priceM: 20, priceF: 10 },
     ];
     setEvents(fetchedEvents);
 
@@ -66,7 +66,14 @@ const Generate = () => {
   const totalPrice = calculatePrice(inputM, priceM) + calculatePrice(inputF, priceF);
 
   const handleGenerate = () => {
-    navigate('/print', { state: { selectedEvent, inputM, inputF } });
+    const now = new Date();
+    const tickets = {
+      selectedEvent,
+      inputM,
+      inputF,
+      dateTime: now.toISOString()
+    };
+    navigate('/print', { state: tickets });
   };
 
   const isGenerateDisabled = !selectedEvent || (!inputM && !inputF);
