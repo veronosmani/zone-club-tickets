@@ -4,15 +4,15 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -25,7 +25,7 @@ code {
 .custom-number-input {
   -moz-appearance: textfield;
 }
-/* Hide everything except the QR codes container when printing */
+
 @media print {
   body > *:not(#qrCodesContainer) {
     display: none;
@@ -35,6 +35,66 @@ code {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+}
+
+.printable-content {
+  display: block;
+}
+
+.ticket-page {
+  page-break-after: always;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.ticket-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+}
+
+.ticket-header img {
+  width: 150px;
+}
+
+.ticket-header div {
+  text-align: right;
+}
+
+/* Hide the content on the screen */
+@media screen {
+  .printable-content {
+    display: none;
+  }
+}
+
+/* Show the content during print */
+@media print {
+  .printable-content {
+    display: block;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .printable-content,
+  .printable-content * {
+    visibility: visible;
+  }
+
+  .printable-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
   }
 }
 

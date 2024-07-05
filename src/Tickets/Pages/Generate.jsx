@@ -13,6 +13,7 @@ const Generate = () => {
   const [inputF, setInputF] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [eventName, setEventName] = useState("Event name");
+  const [dateTime, setDateTime] = useState("");
 
   const navigate = useNavigate();
 
@@ -69,6 +70,7 @@ const Generate = () => {
       inputF,
       dateTime: now.toISOString()
     };
+    setDateTime(tickets.dateTime); // Store the generated dateTime
     navigate('/print', { state: tickets });
   };
 
