@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../Components/Header';
 import ReactToPrint from 'react-to-print';
 import printIcon from '../../assets/printIcon.png';
@@ -7,6 +7,7 @@ import PrintContent from '../Components/PrintContent';
 
 const Print = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { selectedEvent, inputM, inputF, dateTime } = location.state || {
     selectedEvent: { id: 1, name: "Event 1", date: "03/07", priceM: 10, priceF: 5 },
     inputM: "3",
@@ -15,6 +16,22 @@ const Print = () => {
   };
 
   const printRef = useRef();
+  const [isPrinting, setIsPrinting] = useState(false);
+
+  const handleBeforePrint = () => {
+    setIsPrinting(true);
+  };
+
+  const handleAfterPrint = () => {
+    if (isPrinting) {
+      setIsPrinting(false);
+      navigate('/generate');
+    }
+  };
+
+  const handlePrintError = () => {
+    setIsPrinting(false);
+  };
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center" style={{ backgroundColor: "#101010" }}>
@@ -74,15 +91,11 @@ const Print = () => {
             </button>
           )}
           content={() => printRef.current}
-          onBeforePrint={() => {
-            console.log('Preparing content for printing...');
-          }}
-          onAfterPrint={() => {
-            console.log('Print completed.');
-          }}
+          onBeforePrint={handleBeforePrint}
+          onAfterPrint={handleAfterPrint}
+          onPrintError={handlePrintError}
         />
       </div>
-      {/* Render PrintContent but keep it hidden on screen */}
       <div style={{ display: 'none' }}>
         <PrintContent ref={printRef} selectedEvent={selectedEvent} inputM={inputM} inputF={inputF} dateTime={dateTime} />
       </div>
