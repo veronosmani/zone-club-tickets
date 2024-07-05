@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "../Components/Header";
 import zoneLogo from '../../assets/ZoneLogo.png';
@@ -15,22 +15,20 @@ const Print = () => {
     dateTime: new Date().toISOString()
   };
 
-  const calculatePrice = (input, price) => {
-    return input * price;
-  };
-
-  const totalPrice = calculatePrice(inputM, selectedEvent.priceM) + calculatePrice(inputF, selectedEvent.priceF);
+  useEffect(() => {
+    handlePrint();
+  }, []);
 
   const handlePrint = () => {
     const qrCodesContainer = document.getElementById('qrCodesContainer');
     qrCodesContainer.innerHTML = ''; // Clear any existing QR codes
 
     const data = [
-      { text: `Event: ${selectedEvent.name} - M Tickets: ${inputM}\nDate: ${new Date(dateTime).toLocaleString()}`, type: 'M' },
-      { text: `Event: ${selectedEvent.name} - F Tickets: ${inputF}\nDate: ${new Date(dateTime).toLocaleString()}`, type: 'F' }
+      { value: inputM, type: 'M' },
+      { value: inputF, type: 'F' }
     ];
 
-    data.forEach((item, index) => {
+    data.forEach((item) => {
       for (let i = 0; i < item.value; i++) {
         const qrCodeDiv = document.createElement('div');
         qrCodeDiv.classList.add('qrCode');
@@ -65,8 +63,9 @@ const Print = () => {
 
         const qrCode = document.createElement('div');
         qrCode.style.margin = '20px';
+        const qrText = `Event: ${selectedEvent.name} - ${item.type} Tickets\nDate: ${new Date(dateTime).toLocaleString()}`;
         new QRCode(qrCode, {
-          text: item.text,
+          text: qrText,
           width: 256,
           height: 256,
           colorDark: "#000000",
@@ -144,7 +143,6 @@ const Print = () => {
         </button>
       </div>
 
-      {/* QR Codes Container for Printing */}
       <div 
         id="qrCodesContainer" 
         className="hidden"

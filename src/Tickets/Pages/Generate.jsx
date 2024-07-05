@@ -17,7 +17,6 @@ const Generate = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Simulate fetching events from an API
     const fetchedEvents = [
       { id: 1, name: "Wednesday Night - 03/07", date: "03/07", priceM: 10, priceF: 5 },
       { id: 2, name: "Friday Night - 05/07", date: "05/07", priceM: 15, priceF: 10 },
@@ -25,7 +24,6 @@ const Generate = () => {
     ];
     setEvents(fetchedEvents);
 
-    // Load selected event from session storage if available
     const storedEvent = sessionStorage.getItem("selectedEvent");
     if (storedEvent) {
       const event = JSON.parse(storedEvent);
@@ -42,8 +40,6 @@ const Generate = () => {
     setPriceF(event.priceF);
     setEventName(event.name);
     setDropdownOpen(false);
-
-    // Save selected event to session storage
     sessionStorage.setItem("selectedEvent", JSON.stringify(event));
   };
 
