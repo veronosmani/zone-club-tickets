@@ -84,10 +84,10 @@ const Generate = () => {
       <Header />
       <div className="flex justify-center w-full">
         <div className="flex flex-row w-[1000px] h-[50px] justify-between items-center px-5 bg-red-600 rounded-md relative">
+          <button onClick={toggleDropdown} className="flex flex-row justify-between items-center w-full">
           <h1 className="text-white font-bold text-2xl poppins-bold">
             {eventName} {eventDate && ` - ${eventDate}`}
           </h1>
-          <button onClick={toggleDropdown}>
             <img src={dropdownArrow} alt="Dropdown Arrow" />
           </button>
           {dropdownOpen && (
