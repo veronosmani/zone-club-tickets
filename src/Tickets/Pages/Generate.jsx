@@ -84,7 +84,7 @@ const Generate = () => {
       <Header />
       <div className="flex justify-center w-full">
         <div className="flex flex-row w-[1000px] h-[50px] justify-between items-center px-5 bg-red-600 rounded-md relative">
-          <h1 className="text-white font-bold text-2xl">
+          <h1 className="text-white font-bold text-2xl poppins-bold">
             {eventName} {eventDate && ` - ${eventDate}`}
           </h1>
           <button onClick={toggleDropdown}>
@@ -107,51 +107,51 @@ const Generate = () => {
       </div>
       <div className="flex flex-row mt-10 w-[1000px] h-[230px] justify-between items-start">
         <div>
-          <h1 className="w-[425px] bg-red-600 h-[50px] flex items-center justify-center rounded-t-md text-white text-4xl">
+          <h1 className="w-[425px] bg-red-600 h-[50px] flex items-center justify-center rounded-t-md text-white text-4xl play-bold">
             M
           </h1>
           <div className="p-4 rounded-b-md w-[425px] h-[300px] flex flex-col items-center" style={{ backgroundColor: "#191919" }}>
             <input
               type="number"
-              className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-white text-center custom-number-input"
+              className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-white text-center custom-number-input play-bold"
               style={{ backgroundColor: "#191919" }}
               onWheel={(e) => e.target.blur()}
               value={inputM}
               onChange={handleInputChangeM}
             />
             <div className="w-full h-[1px] bg-gray-600 mb-4"></div>
-            <h1 className="text-white text-3xl text-center">
+            <h1 className="text-white text-3xl text-center poppins-semibold">
               {calculatePrice(inputM, priceM)}€
             </h1>
           </div>
         </div>
         <div>
-          <h1 className="w-[425px] bg-red-600 h-[50px] flex items-center justify-center rounded-t-md text-white text-4xl">
+          <h1 className="w-[425px] bg-red-600 h-[50px] flex items-center justify-center rounded-t-md text-white text-4xl play-bold">
             F
           </h1>
           <div className="p-4 rounded-b-md w-[425px] h-[300px] flex flex-col items-center" style={{ backgroundColor: "#191919" }}>
             <input
               type="number"
-              className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-white text-center custom-number-input"
+              className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-white text-center custom-number-input play-bold"
               style={{ backgroundColor: "#191919" }}
               onWheel={(e) => e.target.blur()}
               value={inputF}
               onChange={handleInputChangeF}
             />
             <div className="w-full h-[1px] bg-gray-600 mb-4"></div>
-            <h1 className="text-white text-3xl text-center">
+            <h1 className="text-white text-3xl text-center poppins-semibold">
               {calculatePrice(inputF, priceF)}€
             </h1>
           </div>
         </div>
       </div>
       <div className="flex flex-col items-center w-full absolute bottom-10">
-        <div className="w-[500px] h-[60px] text-white flex items-center justify-center text-xl rounded-t-md" style={{ backgroundColor: "#191919" }}>
+        <div className="w-[500px] h-[60px] text-white flex items-center justify-center text-xl rounded-t-md poppins-bold" style={{ backgroundColor: "#191919" }}>
           TOTAL: {totalPrice}€
         </div>
         <button
           onClick={handleGenerate}
-          className={`w-[500px] h-[60px] text-white text-xl rounded-b-md flex items-center justify-center ${isGenerateDisabled ? "bg-gray-600 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"}`}
+          className={`w-[500px] h-[60px] text-white text-xl rounded-b-md flex items-center justify-center poppins-bold ${isGenerateDisabled ? "bg-gray-600 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"}`}
           disabled={isGenerateDisabled}
         >
           GENERATE

@@ -59,55 +59,55 @@ const Print = () => {
     <div className="w-full min-h-screen flex flex-col items-center" style={{ backgroundColor: "#101010" }}>
       <Header />
       <div className="flex justify-center w-full">
-        <div className="flex flex-row w-[1000px] h-[50px] justify-between items-center px-5 bg-[#515151] rounded-md relative">
-          <h1 className="text-white font-bold text-2xl">{selectedEvent.name} - {selectedEvent.date}</h1>
+        <div className="flex flex-row w-[1000px] h-[50px] justify-between items-center px-5 bg-[#323232] rounded-md relative">
+          <h1 className="text-static font-bold text-2xl poppins-bold">{selectedEvent.name} - {selectedEvent.date}</h1>
         </div>
       </div>
       <div className="flex flex-row mt-10 w-[1000px] h-[230px] justify-between items-start">
         <div>
-          <h1 className="w-[425px] bg-[#515151] h-[50px] flex items-center justify-center rounded-t-md text-white text-4xl">
+          <h1 className="w-[425px] bg-[#323232] h-[50px] flex items-center justify-center rounded-t-md text-static text-4xl play-bold">
             M
           </h1>
           <div className="p-4 rounded-b-md w-[425px] h-[300px] flex flex-col items-center" style={{ backgroundColor: "#191919" }}>
             <input
               type="number"
-              className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-white text-center custom-number-input"
+              className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-static text-center custom-number-input play-bold"
               style={{ backgroundColor: "#191919" }}
               value={inputM}
               readOnly
             />
             <div className="w-full h-[1px] bg-gray-600 mb-4"></div>
-            <h1 className="text-white text-3xl text-center">
+            <h1 className="text-static text-3xl text-center poppins-semibold">
               {inputM * selectedEvent.priceM}€
             </h1>
           </div>
         </div>
         <div>
-          <h1 className="w-[425px] bg-[#515151] h-[50px] flex items-center justify-center rounded-t-md text-white text-4xl">
+          <h1 className="w-[425px] bg-[#323232] h-[50px] flex items-center justify-center rounded-t-md text-static text-4xl play-bold">
             F
           </h1>
           <div className="p-4 rounded-b-md w-[425px] h-[300px] flex flex-col items-center" style={{ backgroundColor: "#191919" }}>
             <input
               type="number"
-              className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-white text-center custom-number-input"
+              className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-static text-center custom-number-input play-bold"
               style={{ backgroundColor: "#191919" }}
               value={inputF}
               readOnly
             />
             <div className="w-full h-[1px] bg-gray-600 mb-4"></div>
-            <h1 className="text-white text-3xl text-center">
+            <h1 className="text-static text-3xl text-center poppins-semibold">
               {inputF * selectedEvent.priceF}€
             </h1>
           </div>
         </div>
       </div>
       <div className="flex flex-col items-center w-full absolute bottom-10">
-        <div className="w-[500px] h-[60px] text-white flex items-center justify-center text-xl rounded-t-md" style={{ backgroundColor: "#191919" }}>
+        <div className="w-[500px] h-[60px] text-white flex items-center justify-center text-xl rounded-t-md poppins-bold" style={{ backgroundColor: "#191919" }}>
           TOTAL: {(inputM * selectedEvent.priceM) + (inputF * selectedEvent.priceF)}€
         </div>
         <ReactToPrint
           trigger={() => (
-            <button className="w-[500px] h-[60px] bg-red-600 text-white text-xl rounded-b-md flex items-center justify-center">
+            <button className="w-[500px] h-[60px] bg-red-600 text-white text-xl rounded-b-md flex items-center justify-center poppins-bold">
               PRINT
               <img src={printIcon} style={{ marginLeft: '5px' }} alt="Print Icon" />
             </button>
