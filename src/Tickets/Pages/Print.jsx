@@ -25,13 +25,16 @@ const Print = () => {
   const [isPrinting, setIsPrinting] = useState(false);
   const [printAttempted, setPrintAttempted] = useState(false);
 
+  const [priceM, setPriceM] = useState(selectedEvent.priceM);
+  const [priceF, setPriceF] = useState(selectedEvent.priceF);
+
   const handleBeforePrint = () => {
     setIsPrinting(true);
   };
-  
-    const handlePrintError = () => {
-      setIsPrinting(false);
-    };
+
+  const handlePrintError = () => {
+    setIsPrinting(false);
+  };
 
   const handleAfterPrint = () => {
     if (isPrinting) {
@@ -41,6 +44,12 @@ const Print = () => {
   };
 
   useEffect(() => {
+    const userEmail = sessionStorage.getItem("userEmail");
+    if (userEmail === "admin@gmail.com") {
+      setPriceM(0);
+      setPriceF(0);
+    }
+
     window.addEventListener("beforeprint", handleBeforePrint);
     window.addEventListener("afterprint", handleAfterPrint);
 
@@ -49,6 +58,8 @@ const Print = () => {
       window.removeEventListener("afterprint", handleAfterPrint);
     };
   }, [isPrinting, navigate]);
+
+  const totalPrice = inputM * priceM + inputF * priceF;
 
   return (
     <div
@@ -81,7 +92,7 @@ const Print = () => {
             />
             <div className="w-full h-[1px] bg-gray-600 mb-4"></div>
             <h1 className="text-static text-3xl text-center poppins-semibold">
-              {inputM * selectedEvent.priceM}€
+              {inputM * priceM}€
             </h1>
           </div>
         </div>
@@ -102,7 +113,7 @@ const Print = () => {
             />
             <div className="w-full h-[1px] bg-gray-600 mb-4"></div>
             <h1 className="text-static text-3xl text-center poppins-semibold">
-              {inputF * selectedEvent.priceF}€
+              {inputF * priceF}€
             </h1>
           </div>
         </div>
@@ -112,8 +123,7 @@ const Print = () => {
           className="w-[500px] h-[60px] text-white flex items-center justify-center text-xl rounded-t-md poppins-bold"
           style={{ backgroundColor: "#191919" }}
         >
-          TOTAL: {inputM * selectedEvent.priceM + inputF * selectedEvent.priceF}
-          €
+          TOTAL: {totalPrice}€
         </div>
         <ReactToPrint
           trigger={() => (
@@ -143,6 +153,8 @@ const Print = () => {
           inputM={inputM}
           inputF={inputF}
           dateTime={dateTime}
+          priceM={priceM}
+          priceF={priceF}
         />
       </div>
     </div>

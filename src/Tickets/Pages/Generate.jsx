@@ -27,24 +27,40 @@ const Generate = () => {
     setEvents(fetchedEvents);
 
     const storedEvent = sessionStorage.getItem("selectedEvent");
+    const userEmail = sessionStorage.getItem("userEmail");
+    let event = null;
+
     if (storedEvent) {
-      const event = JSON.parse(storedEvent);
+      event = JSON.parse(storedEvent);
       setSelectedEvent(event);
-      setPriceM(event.priceM);
-      setPriceF(event.priceF);
       setEventName(event.name);
       setEventDate(event.date);
+    }
+
+    if (userEmail === "admin@gmail.com") {
+      setPriceM(0);
+      setPriceF(0);
+    } else if (event) {
+      setPriceM(event.priceM);
+      setPriceF(event.priceF);
     }
   }, []);
 
   const handleEventSelect = (event) => {
+    const userEmail = sessionStorage.getItem("userEmail");
     setSelectedEvent(event);
-    setPriceM(event.priceM);
-    setPriceF(event.priceF);
     setEventName(event.name);
     setEventDate(event.date);
     setDropdownOpen(false);
     sessionStorage.setItem("selectedEvent", JSON.stringify(event));
+
+    if (userEmail === "admin@gmail.com") {
+      setPriceM(0);
+      setPriceF(0);
+    } else {
+      setPriceM(event.priceM);
+      setPriceF(event.priceF);
+    }
   };
 
   const toggleDropdown = () => {

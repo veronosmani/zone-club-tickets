@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import zoneLogo from "../../assets/ZoneLogo.png";
 import emailIcon from "../../assets/emailIcon.png";
 import passwordIcon from "../../assets/passwordIcon.png";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    sessionStorage.removeItem("selectedEvent"); // Clear session storage on login
-    navigate("/generate");
+    if (email === "admin@gmail.com" || email === "door@gmail.com") {
+      sessionStorage.setItem("userEmail", email);
+      sessionStorage.removeItem("selectedEvent");
+      navigate("/generate");
+    } else {
+      setError("Invalid user. Please enter a valid email address.");
+    }
   };
 
   return (
@@ -41,10 +49,15 @@ const Login = () => {
           </h1>
         </div>
         <div className="flex flex-col space-y-6 w-full px-4">
+          {error && (
+            <div className="text-red-500 text-center">{error}</div>
+          )}
           <div className="relative w-full">
             <input
               type="email"
               placeholder="Email Address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="p-2 pl-10 rounded bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-500 w-full"
               style={{
                 backgroundImage: `url(${emailIcon})`,
@@ -58,6 +71,8 @@ const Login = () => {
             <input
               type="password"
               placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="p-2 pl-10 rounded bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-500 w-full"
               style={{
                 backgroundImage: `url(${passwordIcon})`,
