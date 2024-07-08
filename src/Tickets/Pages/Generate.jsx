@@ -15,8 +15,11 @@ const Generate = () => {
   const [eventName, setEventName] = useState("Event name");
   const [dateTime, setDateTime] = useState("");
   const [eventDate, setEventDate] = useState("");
+  const [extraDropdownOpen, setExtraDropdownOpen] = useState(false);
+  const [selectedExtra, setSelectedExtra] = useState(null);
 
   const navigate = useNavigate();
+  const userEmail = sessionStorage.getItem("userEmail");
 
   useEffect(() => {
     const fetchedEvents = [
@@ -27,7 +30,6 @@ const Generate = () => {
     setEvents(fetchedEvents);
 
     const storedEvent = sessionStorage.getItem("selectedEvent");
-    const userEmail = sessionStorage.getItem("userEmail");
     let event = null;
 
     if (storedEvent) {
@@ -44,10 +46,9 @@ const Generate = () => {
       setPriceM(event.priceM);
       setPriceF(event.priceF);
     }
-  }, []);
+  }, [userEmail]);
 
   const handleEventSelect = (event) => {
-    const userEmail = sessionStorage.getItem("userEmail");
     setSelectedEvent(event);
     setEventName(event.name);
     setEventDate(event.date);
@@ -63,8 +64,17 @@ const Generate = () => {
     }
   };
 
+  const handleExtraSelect = (extra) => {
+    setSelectedExtra(extra);
+    setExtraDropdownOpen(false);
+  };
+
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
+  };
+
+  const toggleExtraDropdown = () => {
+    setExtraDropdownOpen(!extraDropdownOpen);
   };
 
   const handleInputChangeM = (e) => {
@@ -79,8 +89,7 @@ const Generate = () => {
     return input * price;
   };
 
-  const totalPrice =
-    calculatePrice(inputM, priceM) + calculatePrice(inputF, priceF);
+  const totalPrice = calculatePrice(inputM, priceM) + calculatePrice(inputF, priceF);
 
   const handleGenerate = () => {
     const now = new Date();
@@ -89,12 +98,16 @@ const Generate = () => {
       inputM,
       inputF,
       dateTime: now.toISOString(),
+      selectedExtra,
     };
-    setDateTime(tickets.dateTime); // Store the generated dateTime
+    setDateTime(tickets.dateTime); 
     navigate("/print", { state: tickets });
   };
 
-  const isGenerateDisabled = !selectedEvent || (!inputM && !inputF);
+  const isGenerateDisabled = !selectedEvent || (!inputM && !inputF) || (userEmail === "admin@gmail.com" && !selectedExtra);
+
+  const inputHeightClass = userEmail === "admin@gmail.com" ? "h-[150px]" : "h-[200px]";
+  const inputDivHeightClass = userEmail === "admin@gmail.com" ? "h-[250px]" : "h-[300px]";
 
   return (
     <div
@@ -128,18 +141,48 @@ const Generate = () => {
           )}
         </div>
       </div>
-      <div className="flex flex-row mt-10 w-[1000px] h-[230px] justify-between items-start">
-        <div>
-          <h1 className="w-[425px] bg-red-600 h-[50px] flex items-center justify-center rounded-t-md text-white text-4xl play-bold">
+
+      {userEmail === "admin@gmail.com" && (
+        <div className="flex justify-center w-full mt-4 -mb-4">
+          <div className="flex flex-row w-[1000px] h-[50px] justify-between items-center px-5 bg-red-600 rounded-md relative">
+            <button
+              onClick={toggleExtraDropdown}
+              className="flex flex-row justify-between items-center w-full"
+            >
+              <h1 className="text-white font-bold text-2xl poppins-bold">
+                {selectedExtra ? selectedExtra : "Select Admin"}
+              </h1>
+              <img src={dropdownArrow} alt="Dropdown Arrow" />
+            </button>
+            {extraDropdownOpen && (
+              <div className="absolute top-full right-0 bg-white w-full rounded-md shadow-lg z-10">
+                {["Admin 1", "Admin 2", "Admin 3"].map((extra) => (
+                  <div
+                    key={extra}
+                    className="p-2 hover:bg-gray-200 cursor-pointer"
+                    onClick={() => handleExtraSelect(extra)}
+                  >
+                    {extra}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      <div className="flex flex-row mt-10 w-[1000px] justify-between items-start">
+        <div className={`w-[425px] ${inputDivHeightClass}`}>
+          <h1 className="w-full bg-red-600 h-[50px] flex items-center justify-center rounded-t-md text-white text-4xl play-bold">
             M
           </h1>
           <div
-            className="p-4 rounded-b-md w-[425px] h-[300px] flex flex-col items-center"
+            className={`p-4 rounded-b-md w-full flex flex-col items-center ${inputDivHeightClass}`}
             style={{ backgroundColor: "#191919" }}
           >
             <input
               type="number"
-              className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-white text-center custom-number-input play-bold"
+              className={`w-full ${inputHeightClass} p-2 mb-4 outline-none text-[120px] text-white text-center custom-number-input play-bold`}
               style={{ backgroundColor: "#191919" }}
               onWheel={(e) => e.target.blur()}
               value={inputM}
@@ -151,17 +194,17 @@ const Generate = () => {
             </h1>
           </div>
         </div>
-        <div>
-          <h1 className="w-[425px] bg-red-600 h-[50px] flex items-center justify-center rounded-t-md text-white text-4xl play-bold">
+        <div className={`w-[425px] ${inputDivHeightClass}`}>
+          <h1 className="w-full bg-red-600 h-[50px] flex items-center justify-center rounded-t-md text-white text-4xl play-bold">
             F
           </h1>
           <div
-            className="p-4 rounded-b-md w-[425px] h-[300px] flex flex-col items-center"
+            className={`p-4 rounded-b-md w-full flex flex-col items-center ${inputDivHeightClass}`}
             style={{ backgroundColor: "#191919" }}
           >
             <input
               type="number"
-              className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-white text-center custom-number-input play-bold"
+              className={`w-full ${inputHeightClass} p-2 mb-4 outline-none text-[120px] text-white text-center custom-number-input play-bold`}
               style={{ backgroundColor: "#191919" }}
               onWheel={(e) => e.target.blur()}
               value={inputF}
@@ -184,18 +227,12 @@ const Generate = () => {
         <button
           onClick={handleGenerate}
           className={`w-[500px] h-[60px] text-white text-xl rounded-b-md flex items-center justify-center poppins-bold ${
-            isGenerateDisabled
-              ? "bg-gray-600 cursor-not-allowed"
-              : "bg-red-600 hover:bg-red-700"
+            isGenerateDisabled ? "bg-gray-600 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"
           }`}
           disabled={isGenerateDisabled}
         >
           GENERATE
-          <img
-            src={generateIcon}
-            alt="Generate Icon"
-            style={{ marginLeft: "10px" }}
-          />
+          <img src={generateIcon} alt="Generate Icon" style={{ marginLeft: "10px" }} />
         </button>
       </div>
     </div>
