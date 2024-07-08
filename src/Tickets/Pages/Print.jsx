@@ -28,16 +28,16 @@ const Print = () => {
   const handleBeforePrint = () => {
     setIsPrinting(true);
   };
+  
+    const handlePrintError = () => {
+      setIsPrinting(false);
+    };
 
   const handleAfterPrint = () => {
     if (isPrinting) {
       setIsPrinting(false);
       navigate("/generate");
     }
-  };
-
-  const handlePrintError = () => {
-    setIsPrinting(false);
   };
 
   useEffect(() => {
