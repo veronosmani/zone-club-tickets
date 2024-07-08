@@ -25,16 +25,18 @@ const PrintContent = React.forwardRef(({ selectedEvent, inputM, inputF, dateTime
           </div>
           <div className="flex justify-center items-center mt-5" style={{ height: 'calc(100vh - 200px)' }}>
             {dateTime && (
-              <QRCode
-                value={`Event: ${selectedEvent.name} - M Tickets\nDate: ${new Date(dateTime).toLocaleString()}\nUnique: ${uniqueValue}`}
-                size={qrCodeSize}
-                logoImage={ZoneQr}
-                logoWidth={150}
-                logoHeight={150}
-                logoOpacity={1}
-                qrStyle="squares"
-                removeQrCodeBehindLogo={true} 
-              />
+               <QRCode
+               value={`Event: ${selectedEvent.name} - F Tickets\nDate: ${new Date(dateTime).toLocaleString()}\nUnique: ${uniqueValue}`}
+               size={qrCodeSize}
+               bgColor="#323232"  
+               fgColor="white"
+               logoImage={ZoneQr}
+               logoWidth={150}
+               logoHeight={150}
+               logoOpacity={1}
+               qrStyle="squares"
+               removeQrCodeBehindLogo={true} 
+             />
             )}
           </div>
         </div>
@@ -54,15 +56,17 @@ const PrintContent = React.forwardRef(({ selectedEvent, inputM, inputF, dateTime
           <div className="flex justify-center items-center mt-5 bg-white" style={{ height: 'calc(100vh - 200px)' }}>
             {dateTime && (
               <QRCode
-                value={`Event: ${selectedEvent.name} - F Tickets\nDate: ${new Date(dateTime).toLocaleString()}\nUnique: ${uniqueValue}`}
-                size={qrCodeSize}
-                logoImage={ZoneQr}
-                logoWidth={150}
-                logoHeight={150}
-                logoOpacity={1}
-                qrStyle="squares"
-                removeQrCodeBehindLogo={true} 
-              />
+              value={`Event: ${selectedEvent.name} - F Tickets\nDate: ${new Date(dateTime).toLocaleString()}\nUnique: ${uniqueValue}`}
+              size={qrCodeSize}
+              bgColor="white"  
+              fgColor="#323232"
+              logoImage={ZoneQr}
+              logoWidth={150}
+              logoHeight={150}
+              logoOpacity={1}
+              qrStyle="squares"
+              removeQrCodeBehindLogo={true} 
+            />
             )}
           </div>
         </div>
