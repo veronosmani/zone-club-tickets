@@ -1,31 +1,44 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import zoneLogo from '../../assets/ZoneLogo.png'; 
-import emailIcon from '../../assets/emailIcon.png';
-import passwordIcon from '../../assets/passwordIcon.png';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import zoneLogo from "../../assets/ZoneLogo.png";
+import emailIcon from "../../assets/emailIcon.png";
+import passwordIcon from "../../assets/passwordIcon.png";
 
 const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    sessionStorage.removeItem("selectedEvent");  // Clear session storage on login
-    navigate('/generate');
+    sessionStorage.removeItem("selectedEvent"); // Clear session storage on login
+    navigate("/generate");
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen" style={{backgroundColor: "#101010"}}>
-      <div 
-        className="px-8 rounded-md" 
-        style={{ 
-          width: '555px', 
-          height: '475px', 
-          backgroundColor: '#191919', 
-          boxShadow: '0 -4px 10px -2px #404040' 
+    <div
+      className="flex items-center justify-center min-h-screen"
+      style={{ backgroundColor: "#101010" }}
+    >
+      <div
+        className="px-8 rounded-md"
+        style={{
+          width: "555px",
+          height: "475px",
+          backgroundColor: "#191919",
+          boxShadow: "0 -4px 10px -2px #404040",
         }}
       >
         <div className="flex flex-col items-center">
-          <img src={zoneLogo} alt="zone logo" className="w-[210px] h-auto mb-8" style={{ marginTop: '0px' }} />
-          <h1 className="text-white text-2xl pt-4 mb-8" style={{ fontFamily: 'Play, sans-serif' }}>Welcome Back!</h1>
+          <img
+            src={zoneLogo}
+            alt="zone logo"
+            className="w-[210px] h-auto mb-8"
+            style={{ marginTop: "0px" }}
+          />
+          <h1
+            className="text-white text-2xl pt-4 mb-8"
+            style={{ fontFamily: "Play, sans-serif" }}
+          >
+            Welcome Back!
+          </h1>
         </div>
         <div className="flex flex-col space-y-6 w-full px-4">
           <div className="relative w-full">
@@ -33,11 +46,11 @@ const Login = () => {
               type="email"
               placeholder="Email Address"
               className="p-2 pl-10 rounded bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-500 w-full"
-              style={{ 
-                backgroundImage: `url(${emailIcon})`, 
-                backgroundSize: '20px', 
-                backgroundPosition: '10px center', 
-                backgroundRepeat: 'no-repeat'
+              style={{
+                backgroundImage: `url(${emailIcon})`,
+                backgroundSize: "20px",
+                backgroundPosition: "10px center",
+                backgroundRepeat: "no-repeat",
               }}
             />
           </div>
@@ -46,11 +59,11 @@ const Login = () => {
               type="password"
               placeholder="Password"
               className="p-2 pl-10 rounded bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-500 w-full"
-              style={{ 
-                backgroundImage: `url(${passwordIcon})`, 
-                backgroundSize: '20px', 
-                backgroundPosition: '10px center', 
-                backgroundRepeat: 'no-repeat'
+              style={{
+                backgroundImage: `url(${passwordIcon})`,
+                backgroundSize: "20px",
+                backgroundPosition: "10px center",
+                backgroundRepeat: "no-repeat",
               }}
             />
           </div>

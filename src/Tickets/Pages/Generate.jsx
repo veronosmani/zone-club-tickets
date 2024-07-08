@@ -63,7 +63,8 @@ const Generate = () => {
     return input * price;
   };
 
-  const totalPrice = calculatePrice(inputM, priceM) + calculatePrice(inputF, priceF);
+  const totalPrice =
+    calculatePrice(inputM, priceM) + calculatePrice(inputF, priceF);
 
   const handleGenerate = () => {
     const now = new Date();
@@ -80,14 +81,20 @@ const Generate = () => {
   const isGenerateDisabled = !selectedEvent || (!inputM && !inputF);
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center" style={{ backgroundColor: "#101010" }}>
+    <div
+      className="w-full min-h-screen flex flex-col items-center"
+      style={{ backgroundColor: "#101010" }}
+    >
       <Header />
       <div className="flex justify-center w-full">
         <div className="flex flex-row w-[1000px] h-[50px] justify-between items-center px-5 bg-red-600 rounded-md relative">
-          <button onClick={toggleDropdown} className="flex flex-row justify-between items-center w-full">
-          <h1 className="text-white font-bold text-2xl poppins-bold">
-            {eventName} {eventDate && ` - ${eventDate}`}
-          </h1>
+          <button
+            onClick={toggleDropdown}
+            className="flex flex-row justify-between items-center w-full"
+          >
+            <h1 className="text-white font-bold text-2xl poppins-bold">
+              {eventName} {eventDate && ` - ${eventDate}`}
+            </h1>
             <img src={dropdownArrow} alt="Dropdown Arrow" />
           </button>
           {dropdownOpen && (
@@ -110,7 +117,10 @@ const Generate = () => {
           <h1 className="w-[425px] bg-red-600 h-[50px] flex items-center justify-center rounded-t-md text-white text-4xl play-bold">
             M
           </h1>
-          <div className="p-4 rounded-b-md w-[425px] h-[300px] flex flex-col items-center" style={{ backgroundColor: "#191919" }}>
+          <div
+            className="p-4 rounded-b-md w-[425px] h-[300px] flex flex-col items-center"
+            style={{ backgroundColor: "#191919" }}
+          >
             <input
               type="number"
               className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-white text-center custom-number-input play-bold"
@@ -129,7 +139,10 @@ const Generate = () => {
           <h1 className="w-[425px] bg-red-600 h-[50px] flex items-center justify-center rounded-t-md text-white text-4xl play-bold">
             F
           </h1>
-          <div className="p-4 rounded-b-md w-[425px] h-[300px] flex flex-col items-center" style={{ backgroundColor: "#191919" }}>
+          <div
+            className="p-4 rounded-b-md w-[425px] h-[300px] flex flex-col items-center"
+            style={{ backgroundColor: "#191919" }}
+          >
             <input
               type="number"
               className="w-full h-[200px] p-2 mb-4 outline-none text-[120px] text-white text-center custom-number-input play-bold"
@@ -146,16 +159,27 @@ const Generate = () => {
         </div>
       </div>
       <div className="flex flex-col items-center w-full absolute bottom-10">
-        <div className="w-[500px] h-[60px] text-white flex items-center justify-center text-xl rounded-t-md poppins-bold" style={{ backgroundColor: "#191919" }}>
+        <div
+          className="w-[500px] h-[60px] text-white flex items-center justify-center text-xl rounded-t-md poppins-bold"
+          style={{ backgroundColor: "#191919" }}
+        >
           TOTAL: {totalPrice}€
         </div>
         <button
           onClick={handleGenerate}
-          className={`w-[500px] h-[60px] text-white text-xl rounded-b-md flex items-center justify-center poppins-bold ${isGenerateDisabled ? "bg-gray-600 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"}`}
+          className={`w-[500px] h-[60px] text-white text-xl rounded-b-md flex items-center justify-center poppins-bold ${
+            isGenerateDisabled
+              ? "bg-gray-600 cursor-not-allowed"
+              : "bg-red-600 hover:bg-red-700"
+          }`}
           disabled={isGenerateDisabled}
         >
           GENERATE
-          <img src={generateIcon} alt="Generate Icon" style={{ marginLeft: "10px" }} />
+          <img
+            src={generateIcon}
+            alt="Generate Icon"
+            style={{ marginLeft: "10px" }}
+          />
         </button>
       </div>
     </div>
