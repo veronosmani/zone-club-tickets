@@ -18,21 +18,32 @@ const Print = () => {
   const printRef = useRef();
   const [isPrinting, setIsPrinting] = useState(false);
   const [printAttempted, setPrintAttempted] = useState(false);
+  const [retry, setRetry] = useState(false);
 
   const handleBeforePrint = () => {
     setIsPrinting(true);
+    setRetry(false);
   };
 
   const handleAfterPrint = () => {
     if (isPrinting) {
       setIsPrinting(false);
-      navigate('/generate'); // Navigate back only after successful print
+      navigate('/generate'); 
     }
   };
 
   const handlePrintError = () => {
     setIsPrinting(false);
+    if (!retry) {
+      setRetry(true);
+    }
   };
+
+  useEffect(() => {
+    if (retry) {
+      setPrintAttempted(false);
+    }
+  }, [retry]);
 
   useEffect(() => {
     window.addEventListener('beforeprint', handleBeforePrint);
@@ -107,8 +118,8 @@ const Print = () => {
             return Promise.resolve();
           }}
           onBeforePrint={handleBeforePrint}
-          onAfterPrint={handleAfterPrint}
           onPrintError={handlePrintError}
+          onAfterPrint={handleAfterPrint}
         />
       </div>
       <div style={{ display: 'none' }}>
