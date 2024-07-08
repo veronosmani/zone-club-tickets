@@ -171,6 +171,7 @@ const Print = () => {
           dateTime={dateTime}
           priceM={priceM}
           priceF={priceF}
+          selectedExtra={selectedExtra}
         />
       </div>
     </div>
