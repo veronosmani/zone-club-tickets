@@ -8,7 +8,7 @@ const PrintContent = React.forwardRef(
   ({ selectedEvent, inputM, inputF, dateTime }, ref) => {
     const generateTicketPages = () => {
       const pages = [];
-      const qrCodeSize = 650;
+      const qrCodeSize = 175;
 
       const formattedDate = new Date(dateTime).toLocaleDateString();
       const formattedTime = new Date(dateTime).toLocaleTimeString([], {
@@ -24,13 +24,13 @@ const PrintContent = React.forwardRef(
           .substring(7)}`;
         pages.push(
           <div
-            className="w-full min-h-screen border-4 border-black"
+            className="w-[288px] h-[288px] m-2 border-2 border-black"
             key={`m-${i}`}
             style={{ backgroundColor: "#323232" }}
           >
-            <div className="bg-white text-black flex justify-between items-center p-5">
-              <img src={TicketLogoM} alt="M Ticket Logo" className="w-36" />
-              <div className="text-right">
+            <div className="bg-white text-black flex justify-between items-center p-2.5 h-[70px]">
+              <img src={TicketLogoM} alt="M Ticket Logo" className="w-14 h-8" />
+              <div className="text-right poppins-semibold text-[13px]">
                 <h1>
                   {formattedDate} - {formattedTime}
                 </h1>
@@ -38,22 +38,22 @@ const PrintContent = React.forwardRef(
               </div>
             </div>
             <div
-              className="flex justify-center items-center mt-5"
-              style={{ height: "calc(100vh - 200px)" }}
+              className="flex justify-center items-center"
+              style={{ height: "calc(288px - 74px)" }}
             >
               {dateTime && (
                 <QRCode
                   value={`Event: ${
                     selectedEvent.name
-                  } - F Tickets\nDate: ${new Date(
+                  } - M Tickets\nDate: ${new Date(
                     dateTime
                   ).toLocaleString()}\nUnique: ${uniqueValue}`}
                   size={qrCodeSize}
                   bgColor="#323232"
                   fgColor="white"
                   logoImage={ZoneQr}
-                  logoWidth={150}
-                  logoHeight={150}
+                  logoWidth={30}
+                  logoHeight={30}
                   logoOpacity={1}
                   qrStyle="squares"
                   removeQrCodeBehindLogo={true}
@@ -71,15 +71,13 @@ const PrintContent = React.forwardRef(
           .substring(7)}`;
         pages.push(
           <div
-            className="w-full min-h-screen border-4 border-black bg-white"
+            className="w-[288px] h-[288px] m-2 border-2 border-black"
             key={`f-${i}`}
+            style={{ backgroundColor: "#323232" }}
           >
-            <div
-              className="text-white flex justify-between items-center p-5"
-              style={{ backgroundColor: "#323232" }}
-            >
-              <img src={TicketLogoW} alt="W Ticket Logo" className="w-36" />
-              <div className="text-right">
+            <div className="text-white flex justify-between items-center p-2.5 h-[70px] bg-[#323232]">
+              <img src={TicketLogoW} alt="W Ticket Logo" className="w-14 h-8" />
+              <div className="text-right poppins-semibold text-[13px]">
                 <h1>
                   {formattedDate} - {formattedTime}
                 </h1>
@@ -87,8 +85,8 @@ const PrintContent = React.forwardRef(
               </div>
             </div>
             <div
-              className="flex justify-center items-center mt-5 bg-white"
-              style={{ height: "calc(100vh - 200px)" }}
+              className="flex justify-center items-center bg-white"
+              style={{ height: "calc(288px - 74px)" }}
             >
               {dateTime && (
                 <QRCode
@@ -101,8 +99,8 @@ const PrintContent = React.forwardRef(
                   bgColor="white"
                   fgColor="#323232"
                   logoImage={ZoneQr}
-                  logoWidth={150}
-                  logoHeight={150}
+                  logoWidth={30}
+                  logoHeight={30}
                   logoOpacity={1}
                   qrStyle="squares"
                   removeQrCodeBehindLogo={true}
@@ -116,7 +114,7 @@ const PrintContent = React.forwardRef(
     };
 
     return (
-      <div ref={ref} className="printable-content">
+      <div ref={ref} className="printable-content flex flex-wrap">
         {generateTicketPages()}
       </div>
     );

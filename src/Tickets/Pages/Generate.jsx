@@ -30,6 +30,7 @@ const Generate = () => {
     setEvents(fetchedEvents);
 
     const storedEvent = sessionStorage.getItem("selectedEvent");
+    const storedExtra = sessionStorage.getItem("selectedExtra");
     let event = null;
 
     if (storedEvent) {
@@ -37,6 +38,10 @@ const Generate = () => {
       setSelectedEvent(event);
       setEventName(event.name);
       setEventDate(event.date);
+    }
+
+    if (storedExtra) {
+      setSelectedExtra(storedExtra);
     }
 
     if (userEmail === "admin@gmail.com") {
@@ -67,6 +72,7 @@ const Generate = () => {
   const handleExtraSelect = (extra) => {
     setSelectedExtra(extra);
     setExtraDropdownOpen(false);
+    sessionStorage.setItem("selectedExtra", extra);
   };
 
   const toggleDropdown = () => {
@@ -100,7 +106,7 @@ const Generate = () => {
       dateTime: now.toISOString(),
       selectedExtra,
     };
-    setDateTime(tickets.dateTime); 
+    setDateTime(tickets.dateTime);
     navigate("/print", { state: tickets });
   };
 
