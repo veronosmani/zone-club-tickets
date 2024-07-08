@@ -10,7 +10,7 @@ const Valid = () => {
           <h1>Event Name</h1>
         </div>
         <div className="flex w-[270px] h-[120px] items-center justify-center font-bold text-[24px] mx-auto border border-gray-500 text-white">
-          <h1>Qr code event name</h1>
+          <h1>Event name</h1>
         </div>
       </div>
       <div className="relative mt-10">
