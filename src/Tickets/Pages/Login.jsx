@@ -14,6 +14,7 @@ const Login = () => {
     if (email === "admin@gmail.com" || email === "door@gmail.com") {
       sessionStorage.setItem("userEmail", email);
       sessionStorage.removeItem("selectedEvent");
+      sessionStorage.removeItem("selectedExtra");
       navigate("/generate");
     } else {
       setError("Invalid user. Please enter a valid email address.");
